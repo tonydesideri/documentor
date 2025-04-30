@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,9 +21,22 @@ import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AvatarGroup } from "@/components/ui/avatar-group";
+import { NewDocumentModal } from "@/components/new-document.model";
+import { useState } from "react";
 
 export default function Page() {
-  const projects = [
+  const [newDocumentModalOpen, setNewDocumentModalOpen] = useState(false);
+
+  const handleCreateDocument = (document: {
+    name: string;
+    type: string[];
+    template: string;
+  }) => {
+    console.log("Novo projeto criado:", document);
+    // Aqui você adicionaria a lógica para salvar o novo projeto
+    // e atualizar a lista de projetos
+  };
+  const documents = [
     {
       id: 1,
       name: "API de Pagamentos - Documentação Técnica",
@@ -74,20 +89,20 @@ export default function Page() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Concluído":
-        return "bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-100";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100";
       case "Em progresso":
-        return "bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-100";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100";
       case "Iniciado":
-        return "bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-100";
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100";
       default:
-        return "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200";
+        return "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
     }
   };
 
   const getProgressColor = (status: string) => {
     switch (status) {
       case "Concluído":
-        return "[&>div]:bg-emerald-500 bg-gray-200 dark:[&>div]:bg-emerald-700 dark:bg-gray-200";
+        return "[&>div]:bg-green-500 bg-gray-200 dark:[&>div]:bg-green-700 dark:bg-gray-200";
       case "Em progresso":
         return "[&>div]:bg-blue-700 bg-gray-200 dark:[&>div]:bg-blue-800 dark:bg-gray-200";
       case "Iniciado":
@@ -130,8 +145,8 @@ export default function Page() {
       <main className="flex flex-1 flex-col gap-6 py-8 px-14">
         <div className="flex justify-end items-center mb-2">
           <Button
-            className="gap-2"
-            // onClick={() => setNewProjectModalOpen(true)}
+            className="gap-2 cursor-pointer"
+            onClick={() => setNewDocumentModalOpen(true)}
           >
             <Plus className="h-4 w-4" />
             Novo Documento
@@ -139,13 +154,15 @@ export default function Page() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <Card key={project.id} className="overflow-hidden">
+          {documents.map((document) => (
+            <Card key={document.id} className="overflow-hidden">
               <CardHeader className="pb-1">
                 <div className="flex justify-between items-start gap-4">
-                  <h3 className="font-semibold line-clamp-2">{project.name}</h3>
-                  <Badge className={getStatusColor(project.status)}>
-                    {project.status}
+                  <h3 className="font-semibold line-clamp-2">
+                    {document.name}
+                  </h3>
+                  <Badge className={getStatusColor(document.status)}>
+                    {document.status}
                   </Badge>
                 </div>
               </CardHeader>
@@ -172,22 +189,22 @@ export default function Page() {
                     </AvatarGroup>
                     <div className="flex gap-2 text-sm text-muted-foreground">
                       <span>Progresso</span>
-                      <span>{project.progress}%</span>
+                      <span>{document.progress}%</span>
                     </div>
                   </div>
 
                   <Progress
-                    value={project.progress}
-                    className={`h-2 ${getProgressColor(project.status)}`}
+                    value={document.progress}
+                    className={`h-2 ${getProgressColor(document.status)}`}
                   />
                   <p className="text-sm text-muted-foreground">
-                    Última edição: {formatDate(project.lastEdited)}
+                    Última edição: {formatDate(document.lastEdited)}
                   </p>
                 </div>
               </CardContent>
               <CardFooter className="flex gap-2 pt-2">
                 <Button variant="outline" className="flex-1" asChild>
-                  <Link href={`/projeto/${project.id}`}>Continuar</Link>
+                  <Link href={`/projeto/${document.id}`}>Continuar</Link>
                 </Button>
                 <Button variant="ghost" size="icon" className="cursor-pointer">
                   <FileDown />
@@ -200,6 +217,11 @@ export default function Page() {
           ))}
         </div>
       </main>
+      <NewDocumentModal
+        open={newDocumentModalOpen}
+        onOpenChange={setNewDocumentModalOpen}
+        onCreateDocument={handleCreateDocument}
+      />
     </SidebarInset>
   );
 }
