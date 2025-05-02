@@ -164,9 +164,11 @@ export default function Page() {
               Visualizar
             </Link>
           </Button>
-          <Button variant="ghost">
-            <FileDown />
-            Exportar
+          <Button variant="ghost" asChild>
+            <Link href={`/document/${params.id}/export`}>
+              <FileDown />
+              Exportar
+            </Link>
           </Button>
           <Button variant="ghost">
             <Settings />

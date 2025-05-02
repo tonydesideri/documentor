@@ -251,9 +251,11 @@ export default function Page() {
         </div>
 
         <div className="flex gap-2 px-2">
-          <Button variant="ghost">
-            <FileDown />
-            Exportar
+          <Button variant="ghost" asChild>
+            <Link href={`/document/${params.id}/export`}>
+              <FileDown />
+              Exportar
+            </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
             <Link href={`/document/${params.id}`}>
@@ -265,7 +267,7 @@ export default function Page() {
       </header>
 
       {/* Conteúdo principal com índice lateral e documento */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-auto">
         {/* Sidebar Esquerda - Listagem de Seções */}
         <div
           className={`border-r transition-all duration-300 ${
