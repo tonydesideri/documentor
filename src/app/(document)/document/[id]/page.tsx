@@ -159,7 +159,7 @@ export default function Page() {
         </div>
         <div className="flex gap-2 px-2">
           <Button variant="ghost" asChild>
-            <Link href={`/document/${params.id}/view`}>
+            <Link href={`/document/${params.id}/preview`}>
               <Eye />
               Visualizar
             </Link>
