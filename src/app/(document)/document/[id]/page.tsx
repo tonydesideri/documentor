@@ -158,9 +158,11 @@ export default function Page() {
           </Breadcrumb>
         </div>
         <div className="flex gap-2 px-2">
-          <Button variant="ghost">
-            <Eye />
-            Visualizar
+          <Button variant="ghost" asChild>
+            <Link href={`/document/${params.id}/view`}>
+              <Eye />
+              Visualizar
+            </Link>
           </Button>
           <Button variant="ghost">
             <FileDown />
@@ -176,15 +178,15 @@ export default function Page() {
       <main className="flex flex-1">
         {/* Sidebar Esquerda - Listagem de Seções */}
         <div
-          className={`py-8 border-r transition-all duration-300 ${
+          className={`border-r transition-all duration-300 ${
             leftPanelOpen ? "w-64" : "w-0 -ml-3 opacity-0"
           }`}
         >
           {leftPanelOpen && (
             <div className="flex h-full flex-col">
-              <h3 className="text-sm font-medium text-muted-foreground px-5">
-                Seções
-              </h3>
+              <div className="flex items-center justify-between p-4 border-b">
+                <h2 className="text-lg font-semibold">Seções</h2>
+              </div>
               <ScrollArea className="flex-1">
                 <div className="p-4 flex flex-col gap-2">
                   {sections.map((section) => (
