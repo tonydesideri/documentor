@@ -135,7 +135,7 @@ export default function Page() {
           />
           <Breadcrumb>
             <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
+              <BreadcrumbItem>
                 <BreadcrumbPage>Documentos</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
@@ -155,7 +155,7 @@ export default function Page() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {documents.map((document) => (
-            <Card key={document.id} className="overflow-hidden">
+            <Card key={document.id} className="overflow-hidden shadow-none">
               <CardHeader className="pb-1">
                 <div className="flex justify-between items-start gap-4">
                   <h3 className="font-semibold line-clamp-2">
@@ -204,12 +204,12 @@ export default function Page() {
               </CardContent>
               <CardFooter className="flex gap-2 pt-2">
                 <Button variant="outline" className="flex-1" asChild>
-                  <Link href={`/projeto/${document.id}`}>Continuar</Link>
+                  <Link href={`/document/${document.id}`}>Continuar</Link>
                 </Button>
-                <Button variant="ghost" size="icon" className="cursor-pointer">
+                <Button variant="ghost" size="icon">
                   <FileDown />
                 </Button>
-                <Button variant="ghost" size="icon" className="cursor-pointer">
+                <Button variant="ghost" size="icon">
                   <Trash2 />
                 </Button>
               </CardFooter>
